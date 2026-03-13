@@ -9,55 +9,115 @@
   }
   
   body {
-    @apply bg-primary-bg text-text-primary font-sans antialiased;
+    background-color: #0f0f1a;
+    color: #e0e0e8;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Typography improvements */
   h1, h2, h3, h4, h5, h6 {
-    @apply text-text-primary font-semibold leading-tight;
+    color: #e0e0e8;
+    font-weight: 600;
+    line-height: 1.25;
   }
   
   p {
-    @apply text-text-muted leading-relaxed;
+    color: #8888a8;
+    line-height: 1.625;
   }
   
   a {
-    @apply text-accent hover:text-accent-hover transition-colors duration-200;
+    color: #4fc3f7;
+    transition: color 0.2s;
+  }
+  
+  a:hover {
+    color: #29b6f6;
   }
 }
 
 /* Custom component styles */
 @layer components {
   .btn-primary {
-    @apply bg-gradient-cyan-blue text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-accent/25 transition-all duration-200 transform hover:scale-105;
+    background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    box-shadow: 0 10px 15px -3px rgba(79, 195, 247, 0.25);
+    transition: all 0.2s;
+    transform: scale(1);
+    display: inline-block;
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 20px 25px -5px rgba(79, 195, 247, 0.3);
+    transform: scale(1.05);
   }
   
   .btn-outline {
-    @apply border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent hover:text-white transition-colors duration-200;
+    border: 1px solid #4fc3f7;
+    color: #4fc3f7;
+    background: transparent;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  
+  .btn-outline:hover {
+    background-color: #4fc3f7;
+    color: white;
   }
   
   .section-divider {
-    @apply h-px bg-gradient-to-r from-transparent via-accent to-transparent;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #4fc3f7, transparent);
   }
   
   .card {
-    @apply bg-secondary-bg p-6 rounded-xl border border-accent/10 hover:border-accent/20 transition-colors duration-200;
+    background-color: #1a1a2e;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(79, 195, 247, 0.1);
+    transition: border-color 0.2s;
+  }
+  
+  .card:hover {
+    border-color: rgba(79, 195, 247, 0.2);
   }
   
   .feature-card {
-    @apply bg-secondary-bg p-8 rounded-2xl border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:transform hover:scale-105;
+    background-color: #1a1a2e;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(79, 195, 247, 0.1);
+    transition: all 0.3s;
+  }
+  
+  .feature-card:hover {
+    border-color: rgba(79, 195, 247, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(79, 195, 247, 0.1);
+    transform: scale(1.05);
   }
   
   .nav-sticky {
-    @apply bg-primary-bg/95 backdrop-blur-sm border-b border-accent/10;
+    background-color: rgba(15, 15, 26, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(79, 195, 247, 0.1);
   }
   
   .hero-bg {
-    @apply bg-gradient-to-br from-primary-bg via-secondary-bg to-primary-bg;
+    background: linear-gradient(to bottom right, #0f0f1a, #1a1a2e, #0f0f1a);
   }
   
   .logo-gradient {
-    @apply bg-gradient-thermal bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #4fc3f7, #f06292, #ff9800);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 }
 
