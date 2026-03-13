@@ -1,0 +1,128 @@
+<section class="hero-bg pt-20 pb-16 min-h-screen flex items-center">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Hero Content -->
+      <div class="space-y-8" data-animate data-delay="100ms">
+        <div class="space-y-4">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            Next-Generation <span class="logo-gradient">Data Center</span> Thermal Modeling
+          </h1>
+          <p class="text-xl text-text-muted max-w-2xl">
+            Design, simulate, and optimize data center cooling — from browser or desktop. Powered by OpenFOAM.
+          </p>
+        </div>
+        
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#contact" class="btn-primary">
+            Request a Demo
+          </a>
+          <a href="https://docs.coolsimsoftware.com" class="btn-outline" target="_blank" rel="noopener noreferrer">
+            View Documentation
+          </a>
+        </div>
+        
+        <!-- Social Proof -->
+        <div class="pt-8 border-t border-accent/10">
+          <p class="text-text-muted mb-4">Trusted by engineering teams worldwide</p>
+          <!-- Placeholder for logos -->
+          <div class="flex items-center space-x-8 opacity-50">
+            <div class="h-8 w-20 bg-text-muted/20 rounded"></div>
+            <div class="h-8 w-16 bg-text-muted/20 rounded"></div>
+            <div class="h-8 w-24 bg-text-muted/20 rounded"></div>
+            <div class="h-8 w-18 bg-text-muted/20 rounded"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="relative" data-animate data-delay="200ms">
+        <div class="relative bg-gradient-to-br from-accent/20 to-accent-hover/20 rounded-2xl p-8 border border-accent/30">
+          <!-- Mock 3D viewport -->
+          <div class="aspect-video bg-primary-bg rounded-lg border border-accent/20 p-4 relative overflow-hidden">
+            <!-- Grid background -->
+            <div class="absolute inset-0 opacity-20">
+              <div class="grid grid-cols-8 grid-rows-6 h-full w-full gap-1">
+                {{ range (seq 48) }}
+                  <div class="border border-accent/30"></div>
+                {{ end }}
+              </div>
+            </div>
+            
+            <!-- Geometric shapes suggesting 3D objects -->
+            <div class="absolute inset-4 flex items-center justify-center">
+              <!-- Server racks -->
+              <div class="grid grid-cols-3 gap-4 w-full max-w-sm">
+                <div class="h-24 bg-gradient-to-b from-accent/40 to-accent-hover/40 rounded-sm shadow-lg shadow-accent/20"></div>
+                <div class="h-20 bg-gradient-to-b from-accent/30 to-accent-hover/30 rounded-sm shadow-lg shadow-accent/20"></div>
+                <div class="h-28 bg-gradient-to-b from-accent/50 to-accent-hover/50 rounded-sm shadow-lg shadow-accent/20"></div>
+              </div>
+            </div>
+            
+            <!-- Airflow indicators -->
+            <div class="absolute top-4 right-4 space-y-1">
+              <div class="flex space-x-1">
+                {{ range (seq 5) }}
+                  <div class="w-1 h-1 bg-accent rounded-full animate-pulse" style="animation-delay: {{ mul . 100 }}ms;"></div>
+                {{ end }}
+              </div>
+              <div class="flex space-x-1">
+                {{ range (seq 5) }}
+                  <div class="w-1 h-1 bg-accent-hover rounded-full animate-pulse" style="animation-delay: {{ mul . 150 }}ms;"></div>
+                {{ end }}
+              </div>
+            </div>
+            
+            <!-- Temperature legend -->
+            <div class="absolute bottom-4 left-4 text-xs text-text-muted">
+              <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-gradient-to-r from-blue-400 to-red-400 rounded-sm"></div>
+                <span>Temperature (°C)</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Mock toolbar -->
+          <div class="flex justify-between items-center mt-4 px-2">
+            <div class="flex space-x-2">
+              <div class="w-6 h-6 bg-accent/30 rounded border border-accent/50"></div>
+              <div class="w-6 h-6 bg-accent/20 rounded border border-accent/30"></div>
+              <div class="w-6 h-6 bg-accent/20 rounded border border-accent/30"></div>
+            </div>
+            <div class="text-xs text-text-muted">3D Viewport</div>
+          </div>
+        </div>
+        
+        <!-- Floating badges -->
+        <div class="absolute -top-4 -right-4 bg-accent text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+          Real-time CFD
+        </div>
+        <div class="absolute -bottom-4 -left-4 bg-accent-hover text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+          OpenFOAM Powered
+        </div>
+      </div>
+    </div>
+    
+    <!-- Key Metrics -->
+    <div class="mt-16 pt-8 border-t border-accent/10" data-animate data-delay="300ms">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-2xl font-bold text-accent">10+</div>
+          <div class="text-text-muted">Object Types</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-accent">Real-time</div>
+          <div class="text-text-muted">CFD Results</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-accent">Cross-Platform</div>
+          <div class="text-text-muted">Deployment</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-accent">Open Source</div>
+          <div class="text-text-muted">Solver</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

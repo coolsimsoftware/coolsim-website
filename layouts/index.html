@@ -1,0 +1,214 @@
+{{ define "main" }}
+{{ partial "hero.html" . }}
+
+<!-- Features Section -->
+<section id="features" class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16" data-animate data-delay="100ms">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Everything You Need for <span class="logo-gradient">Thermal Simulation</span>
+      </h2>
+      <p class="text-xl text-text-muted max-w-3xl mx-auto">
+        From 3D modeling to CFD simulation, CoolSim Next provides a complete toolkit for data center thermal analysis.
+      </p>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+      <!-- 3D Modeler -->
+      <div class="feature-card" data-animate data-delay="200ms">
+        <div class="text-4xl mb-4">🏗️</div>
+        <h3 class="text-xl font-semibold mb-3">3D Modeler</h3>
+        <p class="text-text-muted">
+          Drag-and-drop data center layout with 10+ equipment types, auto-containment, and custom templates.
+        </p>
+      </div>
+
+      <!-- CFD Simulation -->
+      <div class="feature-card" data-animate data-delay="250ms">
+        <div class="text-4xl mb-4">🌊</div>
+        <h3 class="text-xl font-semibold mb-3">CFD Simulation</h3>
+        <p class="text-text-muted">
+          Powered by OpenFOAM. Full solver control, automated meshing, and real-time convergence monitoring.
+        </p>
+      </div>
+
+      <!-- Thermal Analysis -->
+      <div class="feature-card" data-animate data-delay="300ms">
+        <div class="text-4xl mb-4">🌡️</div>
+        <h3 class="text-xl font-semibold mb-3">Thermal Analysis</h3>
+        <p class="text-text-muted">
+          Temperature slices, surface coloring, probe readouts — all overlaid on your 3D model. No ParaView needed.
+        </p>
+      </div>
+
+      <!-- External Flow -->
+      <div class="feature-card" data-animate data-delay="350ms">
+        <div class="text-4xl mb-4">🏙️</div>
+        <h3 class="text-xl font-semibold mb-3">External Flow</h3>
+        <p class="text-text-muted">
+          Dedicated Site Mode for campus-level analysis: cooling towers, condensers, wind effects, and exhaust recirculation.
+        </p>
+      </div>
+
+      <!-- CAD/BIM Integration -->
+      <div class="feature-card" data-animate data-delay="400ms">
+        <div class="text-4xl mb-4">📐</div>
+        <h3 class="text-xl font-semibold mb-3">CAD/BIM Integration</h3>
+        <p class="text-text-muted">
+          Import AutoCAD DXF floor plans. IFC/BIM and Revit plugin on the roadmap.
+        </p>
+      </div>
+
+      <!-- Deploy Anywhere -->
+      <div class="feature-card" data-animate data-delay="450ms">
+        <div class="text-4xl mb-4">☁️</div>
+        <h3 class="text-xl font-semibold mb-3">Deploy Anywhere</h3>
+        <p class="text-text-muted">
+          SaaS, on-premises, or hybrid. One Docker command for self-hosted. Browser or desktop client.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider my-20"></div>
+
+    <!-- Deep Dive Sections -->
+    <div class="space-y-20">
+      <!-- Own Your Solver Pipeline -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-animate data-delay="200ms">
+          <h3 class="text-2xl md:text-3xl font-bold mb-6">Own Your Solver Pipeline</h3>
+          <p class="text-text-muted text-lg mb-6">
+            Unlike black-box commercial solvers, CoolSim Next is built on OpenFOAM — the industry-standard open-source CFD toolkit. You have complete control over solver parameters, turbulence models, and boundary conditions.
+          </p>
+          <ul class="space-y-3 text-text-muted">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Full access to OpenFOAM solver configuration
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Custom turbulence models and boundary conditions
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              No vendor lock-in or licensing restrictions
+            </li>
+          </ul>
+        </div>
+        <div class="bg-secondary-bg p-8 rounded-2xl border border-accent/20" data-animate data-delay="300ms">
+          <!-- Mock code/settings interface -->
+          <div class="font-mono text-sm">
+            <div class="text-accent mb-2">// Solver Configuration</div>
+            <div class="text-text-muted">
+              <div>solver: buoyantBoussinesqPimpleFoam</div>
+              <div>turbulence: kEpsilon</div>
+              <div>timestep: adaptive</div>
+              <div>convergence: 1e-6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modern User Experience -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="bg-secondary-bg p-8 rounded-2xl border border-accent/20 lg:order-first" data-animate data-delay="300ms">
+          <!-- Mock UI elements -->
+          <div class="space-y-4">
+            <div class="bg-accent/20 p-4 rounded-lg border border-accent/30">
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-3 h-3 bg-accent rounded-full"></div>
+                <span class="text-sm text-text-primary">Hot Aisle Containment</span>
+              </div>
+              <div class="text-xs text-text-muted">Temperature: 35°C</div>
+            </div>
+            <div class="bg-blue-500/20 p-4 rounded-lg border border-blue-500/30">
+              <div class="flex items-center space-x-2 mb-2">
+                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span class="text-sm text-text-primary">Cold Aisle</span>
+              </div>
+              <div class="text-xs text-text-muted">Temperature: 22°C</div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200ms">
+          <h3 class="text-2xl md:text-3xl font-bold mb-6">Modern User Experience</h3>
+          <p class="text-text-muted text-lg mb-6">
+            Gone are the days of complex CAD imports and separate visualization tools. CoolSim Next provides an integrated experience with intelligent automation and real-time feedback.
+          </p>
+          <ul class="space-y-3 text-text-muted">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Auto-detection of hot/cold aisle containment
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Live airflow indicators and temperature overlays
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Box select and bulk editing of equipment
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Built for Scale -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div data-animate data-delay="200ms">
+          <h3 class="text-2xl md:text-3xl font-bold mb-6">Built for Scale</h3>
+          <p class="text-text-muted text-lg mb-6">
+            From small server rooms to hyperscale data centers, CoolSim Next scales with your needs. Multi-tenant architecture and enterprise-grade security ensure it works for teams of any size.
+          </p>
+          <ul class="space-y-3 text-text-muted">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Handle thousands of equipment objects
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Multi-tenant with role-based access control
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">✓</span>
+              Enterprise SSO and audit logging
+            </li>
+          </ul>
+        </div>
+        <div class="bg-secondary-bg p-8 rounded-2xl border border-accent/20" data-animate data-delay="300ms">
+          <!-- Mock dashboard -->
+          <div class="text-center space-y-4">
+            <div class="text-3xl font-bold text-accent">10,000+</div>
+            <div class="text-text-muted">Equipment Objects</div>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+              {{ range (seq 12) }}
+                <div class="h-2 bg-accent/30 rounded-full"></div>
+              {{ end }}
+            </div>
+            <div class="text-xs text-text-muted">Distributed compute nodes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-secondary-bg">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-animate>
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+    <p class="text-xl text-text-muted mb-8">
+      Join engineering teams already using CoolSim Next to optimize their data center cooling.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="mailto:sales@coolsimsoftware.com?subject=Demo Request" class="btn-primary">
+        Request a Demo
+      </a>
+      <a href="https://docs.coolsimsoftware.com" class="btn-outline" target="_blank" rel="noopener noreferrer">
+        Read the Docs
+      </a>
+    </div>
+  </div>
+</section>
+
+{{ end }}

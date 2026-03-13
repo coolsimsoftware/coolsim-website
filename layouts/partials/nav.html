@@ -1,0 +1,66 @@
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="text-2xl font-bold flex items-center space-x-2">
+          <span class="text-2xl">🌡️</span>
+          <span class="logo-gradient">CoolSim</span>
+        </a>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-8">
+        {{ range .Site.Menus.main }}
+          {{ if .Params.external }}
+            <a href="{{ .URL }}" class="text-text-muted hover:text-accent transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+              {{ .Name }}
+            </a>
+          {{ else }}
+            <a href="{{ .URL }}" class="text-text-muted hover:text-accent transition-colors duration-200">
+              {{ .Name }}
+            </a>
+          {{ end }}
+        {{ end }}
+      </div>
+
+      <!-- CTA Button -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="#contact" class="btn-primary">
+          Request a Demo
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-text-muted hover:text-accent p-2">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4">
+      <div class="flex flex-col space-y-4">
+        {{ range .Site.Menus.main }}
+          {{ if .Params.external }}
+            <a href="{{ .URL }}" class="text-text-muted hover:text-accent transition-colors duration-200 px-4 py-2" target="_blank" rel="noopener noreferrer">
+              {{ .Name }}
+            </a>
+          {{ else }}
+            <a href="{{ .URL }}" class="text-text-muted hover:text-accent transition-colors duration-200 px-4 py-2">
+              {{ .Name }}
+            </a>
+          {{ end }}
+        {{ end }}
+        <div class="px-4 py-2">
+          <a href="#contact" class="btn-primary block text-center">
+            Request a Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

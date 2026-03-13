@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-primary-bg text-text-primary font-sans antialiased;
+  }
+  
+  /* Typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-semibold leading-tight;
+  }
+  
+  p {
+    @apply text-text-muted leading-relaxed;
+  }
+  
+  a {
+    @apply text-accent hover:text-accent-hover transition-colors duration-200;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-cyan-blue text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-accent/25 transition-all duration-200 transform hover:scale-105;
+  }
+  
+  .btn-outline {
+    @apply border border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent hover:text-white transition-colors duration-200;
+  }
+  
+  .section-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-accent to-transparent;
+  }
+  
+  .card {
+    @apply bg-secondary-bg p-6 rounded-xl border border-accent/10 hover:border-accent/20 transition-colors duration-200;
+  }
+  
+  .feature-card {
+    @apply bg-secondary-bg p-8 rounded-2xl border border-accent/10 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:transform hover:scale-105;
+  }
+  
+  .nav-sticky {
+    @apply bg-primary-bg/95 backdrop-blur-sm border-b border-accent/10;
+  }
+  
+  .hero-bg {
+    @apply bg-gradient-to-br from-primary-bg via-secondary-bg to-primary-bg;
+  }
+  
+  .logo-gradient {
+    @apply bg-gradient-thermal bg-clip-text text-transparent;
+  }
+}
+
+/* Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

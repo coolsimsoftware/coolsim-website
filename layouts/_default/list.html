@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div class="pt-20 pb-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ .Title }}</h1>
+      {{ if .Description }}
+      <p class="text-xl text-text-muted">{{ .Description }}</p>
+      {{ end }}
+    </header>
+
+    <div class="space-y-8">
+      {{ range .Paginator.Pages }}
+      <article class="card">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold mb-3">
+              <a href="{{ .Permalink }}" class="hover:text-accent transition-colors">
+                {{ .Title }}
+              </a>
+            </h2>
+            {{ if .Description }}
+            <p class="text-text-muted mb-4">{{ .Description }}</p>
+            {{ else if .Summary }}
+            <p class="text-text-muted mb-4">{{ .Summary }}</p>
+            {{ end }}
+            
+            <div class="flex items-center text-sm text-text-muted space-x-4">
+              <time datetime="{{ .Date.Format "2006-01-02" }}">
+                {{ .Date.Format "January 2, 2006" }}
+              </time>
+              {{ if .ReadingTime }}
+              <span>{{ .ReadingTime }} min read</span>
+              {{ end }}
+              {{ range .Params.tags }}
+              <span class="bg-accent/20 text-accent px-2 py-1 rounded text-xs">{{ . }}</span>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    {{ if gt .Paginator.TotalPages 1 }}
+    <nav class="flex justify-center mt-12">
+      <div class="flex space-x-2">
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" class="btn-outline">Previous</a>
+        {{ end }}
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" class="btn-outline">Next</a>
+        {{ end }}
+      </div>
+    </nav>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
