@@ -1,0 +1,46 @@
+{{/* Blog post thumbnail — picks an SVG glyph based on .Params.thumb_kind
+     Set in frontmatter: thumb_kind: viewport | diagram | chart | aisle | changelog | split
+     Falls back to gradient panel. */}}
+{{ $kind := .Params.thumb_kind | default "split" }}
+<div class="w-full h-full relative">
+  {{ if eq $kind "viewport" }}
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at 50% 60%,#1a2033,#0a0a1a)">
+    <svg viewBox="0 0 200 120" preserveAspectRatio="none" class="w-full h-full">
+      <defs><linearGradient id="flow-{{ .File.UniqueID }}" x1="0" x2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="60%" stop-color="#ff9800"/><stop offset="100%" stop-color="#f87171"/></linearGradient></defs>
+      <g fill="#1c2333"><rect x="40" y="60" width="20" height="40"/><rect x="70" y="45" width="20" height="55"/><rect x="100" y="55" width="20" height="45"/><rect x="130" y="65" width="20" height="35"/></g>
+      <ellipse cx="80" cy="45" rx="30" ry="40" fill="rgba(240,98,146,.35)"/>
+      <path d="M5 80 C 50 75 100 85 195 80" stroke="url(#flow-{{ .File.UniqueID }})" fill="none" stroke-width="1.3" stroke-dasharray="3 3"/>
+      <path d="M5 55 C 50 48 100 62 195 55" stroke="url(#flow-{{ .File.UniqueID }})" fill="none" stroke-width="1.3" stroke-dasharray="3 3"/>
+    </svg>
+  </div>
+  {{ else if eq $kind "diagram" }}
+  <div class="absolute inset-0 flex items-center justify-center" style="background:#13132a">
+    <svg viewBox="0 0 200 120" class="w-4/5">
+      {{ range seq 0 9 }}{{ $r := . }}{{ range seq 0 15 }}{{ $c := . }}
+      <rect x="{{ add 10 (mul $c 12) }}" y="{{ add 15 (mul $r 10) }}" width="12" height="10" fill="none" stroke="{{ if and (gt $r 4) (and (gt $c 5) (lt $c 11)) }}rgba(240,98,146,.5){{ else }}rgba(79,195,247,.3){{ end }}" stroke-width="0.8"/>
+      {{ end }}{{ end }}
+    </svg>
+  </div>
+  {{ else if eq $kind "chart" }}
+  <div class="absolute inset-0" style="background:#13132a">
+    <svg viewBox="0 0 200 120" preserveAspectRatio="none" class="w-full h-full">
+      <path d="M10 90 L40 70 L70 75 L100 50 L130 55 L160 30 L190 25" stroke="#4fc3f7" stroke-width="1.8" fill="none"/>
+      <path d="M10 100 L40 90 L70 92 L100 78 L130 82 L160 65 L190 60" stroke="#8888a8" stroke-width="1.3" fill="none" stroke-dasharray="3 3"/>
+    </svg>
+  </div>
+  {{ else if eq $kind "aisle" }}
+  <div class="absolute inset-0 flex items-end gap-1 px-[10%] pb-[10%] pt-[30%]" style="background:linear-gradient(180deg,#13132a,#0a0a1a)">
+    {{ range (slice 45 60 40 70 55 65) }}<div class="flex-1 rounded-sm" style="height:{{ . }}%;background:linear-gradient(180deg,#3a4a60,#1c2333)"></div>{{ end }}
+  </div>
+  {{ else if eq $kind "changelog" }}
+  <div class="absolute inset-0 p-4 text-[10px] leading-[1.5]" style="background:#0a0a13;font-family:var(--font-mono,monospace);color:#8fd1ee">
+    <div style="color:#4fc3f7">v2026.1</div><div>+ GMRES precond</div><div>+ probe drag</div><div>+ Revit beta</div><div style="color:#81c784">— 34% faster</div>
+  </div>
+  {{ else }}
+  <div class="absolute inset-0 flex">
+    <div class="flex-1" style="background:linear-gradient(135deg,#1a2033,#0a0a1a)"></div>
+    <div class="w-px" style="background:rgba(79,195,247,.4)"></div>
+    <div class="flex-1" style="background:radial-gradient(ellipse,rgba(79,195,247,.15),transparent 70%),#13132a"></div>
+  </div>
+  {{ end }}
+</div>

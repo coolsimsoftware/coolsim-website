@@ -1,71 +1,130 @@
+{{/* Blog index — featured post + filter chips + 3-col card grid + newsletter CTA */}}
 {{ define "main" }}
-<div class="pt-20 pb-16">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <header class="text-center mb-16">
-      <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ .Title }}</h1>
-      <p class="text-xl text-text-muted">
-        Latest updates, insights, and tutorials from the CoolSim team
-      </p>
-    </header>
+<div class="pt-20">
+  {{/* Page header */}}
+  <header class="border-b border-accent/10" style="background:linear-gradient(to bottom right,#0f0f1a,#131325,#0f0f1a)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div class="font-mono text-[11px] text-accent uppercase tracking-[0.14em] mb-4">Field Notes</div>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3">{{ .Title }}</h1>
+      <p class="text-lg text-text-muted max-w-xl mx-auto">Updates, engineering deep-dives, and case studies from the CoolSim team.</p>
+    </div>
+  </header>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {{ range .Paginator.Pages }}
-      <article class="feature-card">
-        <div class="mb-4">
-          {{ if .Params.featured_image }}
-          <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" class="w-full h-48 object-cover rounded-lg">
-          {{ else }}
-          <div class="w-full h-48 bg-gradient-cyan-blue rounded-lg flex items-center justify-center">
-            <span class="text-4xl">📝</span>
-          </div>
-          {{ end }}
-        </div>
-        
-        <div class="flex items-center text-sm text-text-muted mb-3">
-          <time datetime="{{ .Date.Format "2006-01-02" }}">
-            {{ .Date.Format "January 2, 2006" }}
-          </time>
-          {{ if .ReadingTime }}
-          <span class="mx-2">•</span>
-          <span>{{ .ReadingTime }} min read</span>
-          {{ end }}
-        </div>
-        
-        <h2 class="text-xl font-semibold mb-3">
-          <a href="{{ .Permalink }}" class="hover:text-accent transition-colors">
-            {{ .Title }}
-          </a>
-        </h2>
-        
-        {{ if .Description }}
-        <p class="text-text-muted mb-4">{{ .Description }}</p>
-        {{ else if .Summary }}
-        <p class="text-text-muted mb-4">{{ .Summary }}</p>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {{/* ============ FEATURED POST ============ */}}
+    {{ $pages := .Paginator.Pages }}
+    {{ $featured := index $pages 0 }}
+    {{ if $featured }}
+    <a href="{{ $featured.Permalink }}" class="group grid md:grid-cols-[1.2fr_1fr] gap-0 mb-14 rounded-2xl overflow-hidden border border-accent/10 bg-secondary-bg hover:border-accent/30 transition-colors">
+      <div class="aspect-[16/10] md:aspect-auto bg-gradient-to-br from-[#1a2033] to-[#0a0a1a] overflow-hidden">
+        {{ with $featured.Params.featured_image }}
+        <img src="{{ . }}" alt="{{ $featured.Title }}" class="w-full h-full object-cover">
+        {{ else }}
+          {{ partial "blog-thumb.html" $featured }}
         {{ end }}
-        
-        {{ if .Params.tags }}
-        <div class="flex flex-wrap gap-2">
-          {{ range .Params.tags }}
-          <span class="bg-accent/20 text-accent px-2 py-1 rounded text-xs">{{ . }}</span>
-          {{ end }}
+      </div>
+      <div class="p-8 md:p-10 flex flex-col justify-center">
+        {{ with $featured.Params.tags }}
+        <div class="flex flex-wrap gap-2 mb-4">
+          {{ range . }}<span class="bg-accent/15 text-accent px-3 py-1 rounded-full text-[11px] font-medium">{{ . }}</span>{{ end }}
         </div>
         {{ end }}
-      </article>
+        <h2 class="text-2xl md:text-[28px] font-bold tracking-tight leading-snug mb-3 group-hover:text-accent transition-colors">{{ $featured.Title }}</h2>
+        <p class="text-text-muted text-[15px] leading-relaxed mb-4">{{ with $featured.Description }}{{ . }}{{ else }}{{ $featured.Summary | truncate 180 }}{{ end }}</p>
+        <div class="text-xs text-text-muted/70 font-mono flex gap-2 flex-wrap">
+          <time datetime="{{ $featured.Date.Format "2006-01-02" }}">{{ $featured.Date.Format "Jan 2, 2006" }}</time>
+          {{ if $featured.ReadingTime }}<span>·</span><span>{{ $featured.ReadingTime }} min read</span>{{ end }}
+          {{ with $featured.Params.author }}<span>·</span><span>{{ . }}</span>{{ end }}
+        </div>
+      </div>
+    </a>
+    {{ end }}
+
+    {{/* ============ FILTER CHIPS ============ */}}
+    {{ $allTags := slice }}
+    {{ range $pages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+    {{ $uniqueTags := $allTags | uniq }}
+    <div class="flex flex-wrap gap-2 mb-7 items-center">
+      <span class="font-mono text-[11px] text-text-muted uppercase tracking-wider mr-2">Filter</span>
+      <button data-filter="all" class="filter-chip active bg-accent text-white px-3 py-1 rounded-full text-xs font-medium">All</button>
+      {{ range $uniqueTags }}
+      <button data-filter="{{ . | urlize }}" class="filter-chip bg-accent/10 text-accent hover:bg-accent/20 px-3 py-1 rounded-full text-xs font-medium transition-colors">{{ . }}</button>
       {{ end }}
     </div>
 
+    {{/* ============ GRID ============ */}}
+    <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {{ range after 1 $pages }}
+      <a href="{{ .Permalink }}" class="blog-card group block rounded-xl overflow-hidden border border-accent/10 bg-secondary-bg hover:border-accent/30 hover:-translate-y-0.5 transition-all"
+         data-tags="{{ delimit (apply .Params.tags "urlize" ".") "," }}">
+        <div class="aspect-[16/10] bg-gradient-to-br from-[#1a2033] to-[#0a0a1a] overflow-hidden">
+          {{ with .Params.featured_image }}
+          <img src="{{ . }}" alt="{{ $.Title }}" class="w-full h-full object-cover">
+          {{ else }}
+            {{ partial "blog-thumb.html" . }}
+          {{ end }}
+        </div>
+        <div class="p-6">
+          {{ with .Params.tags }}
+          <div class="flex flex-wrap gap-1.5 mb-2.5">
+            {{ range first 2 . }}<span class="bg-accent/10 text-accent px-2 py-0.5 rounded text-[11px]">{{ . }}</span>{{ end }}
+          </div>
+          {{ end }}
+          <h3 class="text-lg font-semibold tracking-tight leading-snug mb-2 group-hover:text-accent transition-colors">{{ .Title }}</h3>
+          <p class="text-text-muted text-sm leading-relaxed mb-3">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 110 }}{{ end }}</p>
+          <div class="text-xs text-text-muted/70 font-mono flex gap-2">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+            {{ if .ReadingTime }}<span>·</span><span>{{ .ReadingTime }} min</span>{{ end }}
+          </div>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+    {{/* Pagination */}}
     {{ if gt .Paginator.TotalPages 1 }}
-    <nav class="flex justify-center mt-16">
-      <div class="flex space-x-2">
-        {{ if .Paginator.HasPrev }}
-        <a href="{{ .Paginator.Prev.URL }}" class="btn-outline">Previous</a>
-        {{ end }}
-        {{ if .Paginator.HasNext }}
-        <a href="{{ .Paginator.Next.URL }}" class="btn-outline">Next</a>
-        {{ end }}
+    <nav class="flex justify-center mt-12">
+      <div class="flex gap-2">
+        {{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}" class="btn-outline text-sm">Previous</a>{{ end }}
+        {{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}" class="btn-outline text-sm">Next</a>{{ end }}
       </div>
     </nav>
     {{ end }}
+
+    {{/* Newsletter CTA */}}
+    <aside class="mt-16 rounded-2xl border border-accent/15 bg-secondary-bg p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <div class="font-mono text-[11px] text-accent uppercase tracking-wider mb-1.5">Newsletter</div>
+        <div class="text-lg font-semibold tracking-tight mb-1">New posts, straight to your inbox.</div>
+        <div class="text-sm text-text-muted">One email a month. Unsubscribe any time.</div>
+      </div>
+      <form class="flex gap-2.5 flex-wrap" onsubmit="event.preventDefault();this.querySelector('button').textContent='Subscribed ✓'">
+        <input type="email" required placeholder="you@company.com" class="bg-primary-bg text-text border border-accent/25 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-accent min-w-[240px]">
+        <button type="submit" class="btn-primary text-sm !py-2.5">Subscribe</button>
+      </form>
+    </aside>
   </div>
 </div>
+
+<script>
+// Tag filter
+(function(){
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('#blog-grid .blog-card');
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    const f = chip.dataset.filter;
+    chips.forEach(c => {
+      c.classList.toggle('active', c === chip);
+      c.classList.toggle('bg-accent', c === chip);
+      c.classList.toggle('text-white', c === chip);
+      c.classList.toggle('bg-accent/10', c !== chip);
+      c.classList.toggle('text-accent', c !== chip);
+    });
+    cards.forEach(card => {
+      const tags = (card.dataset.tags || '').split(',');
+      card.style.display = (f === 'all' || tags.includes(f)) ? '' : 'none';
+    });
+  }));
+})();
+</script>
 {{ end }}

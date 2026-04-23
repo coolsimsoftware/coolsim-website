@@ -1,0 +1,21 @@
+{{/* Byline — avatar initials, author name, date, read time */}}
+{{ $initials := "" }}
+{{ with .Params.author }}
+  {{ $parts := split . " " }}
+  {{ range $parts }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+{{ end }}
+<div class="flex items-center gap-3 text-sm">
+  {{ with .Params.author }}
+  <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold text-[13px] flex-shrink-0"
+       style="background:linear-gradient(135deg,#4fc3f7,#f06292)">{{ $initials | upper }}</div>
+  {{ end }}
+  <div class="flex flex-col">
+    {{ with .Params.author }}
+    <div class="text-text font-medium leading-tight">{{ . }}{{ with $.Params.author_title }} <span class="text-text-muted font-normal">· {{ . }}</span>{{ end }}</div>
+    {{ end }}
+    <div class="text-text-muted/70 text-xs font-mono">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      {{ if .ReadingTime }} · {{ .ReadingTime }} min read{{ end }}
+    </div>
+  </div>
+</div>

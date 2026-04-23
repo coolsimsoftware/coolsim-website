@@ -1,0 +1,17 @@
+{{/* Figure — {{< figure src="..." caption="Figure 1 · Caption." alt="..." >}}
+     Or wrap arbitrary HTML: {{< figure caption="..." >}}<svg>...</svg>{{< /figure >}} */}}
+{{ $src := .Get "src" }}
+{{ $caption := .Get "caption" }}
+{{ $alt := .Get "alt" | default $caption }}
+<figure class="not-prose my-8">
+  <div class="rounded-xl overflow-hidden border border-accent/15 bg-secondary-bg">
+    {{ if $src }}
+      <img src="{{ $src }}" alt="{{ $alt }}" class="w-full h-auto block">
+    {{ else }}
+      {{ .Inner | safeHTML }}
+    {{ end }}
+  </div>
+  {{ with $caption }}
+  <figcaption class="mt-3 text-[13px] text-text-muted/80 leading-relaxed">{{ . | markdownify }}</figcaption>
+  {{ end }}
+</figure>

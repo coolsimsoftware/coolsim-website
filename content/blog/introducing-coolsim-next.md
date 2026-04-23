@@ -3,8 +3,10 @@ title: "Introducing CoolSim Next: The Future of Data Center Thermal Modeling"
 description: "After 17 years of innovation, we're excited to introduce CoolSim Next — a complete reimagining of data center CFD simulation built for the modern era."
 date: 2026-03-01T10:00:00-05:00
 author: "Davis Cole"
+author_title: "Founder"
 tags: ["announcement", "product", "cfd", "data center"]
 featured_image: "/images/blog/coolsim-next-hero.jpg"
+thumb_kind: viewport
 ---
 
 Today marks a significant milestone in the evolution of data center thermal modeling. After 17 years of continuous innovation with CoolSim, we're thrilled to introduce **CoolSim Next** — a complete ground-up rebuild that reimagines how engineers design and optimize data center cooling systems.

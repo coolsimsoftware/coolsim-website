@@ -13,6 +13,7 @@ module.exports = {
         'secondary-bg': '#1a1a2e',
         'accent': '#4fc3f7',
         'accent-hover': '#29b6f6',
+        'text': '#e0e0e8',
         'text-primary': '#e0e0e8',
         'text-muted': '#8888a8',
       },

@@ -1,0 +1,7 @@
+{{/* Pull quote — {{< pullquote attribution="— Davis Cole, Founder" >}}body{{< /pullquote >}} */}}
+<blockquote class="not-prose my-10 border-l-4 border-accent pl-6 py-2 text-[22px] leading-snug text-text font-medium tracking-tight">
+  {{ .Inner | markdownify }}
+  {{ with .Get "attribution" }}
+  <span class="block mt-3 text-[13px] text-text-muted font-normal font-mono tracking-wide">{{ . }}</span>
+  {{ end }}
+</blockquote>

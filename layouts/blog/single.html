@@ -1,87 +1,139 @@
+{{/* Blog article layout — v1 Classic.
+     Full-bleed hero, sticky TOC sidebar, wide Inter body, callouts/figures/pullquotes from shortcodes. */}}
 {{ define "main" }}
-<div class="pt-20 pb-16">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <article>
-      <header class="text-center mb-12">
-        {{ if .Params.featured_image }}
-        <div class="mb-8">
-          <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" class="w-full h-64 md:h-80 object-cover rounded-2xl">
-        </div>
+<div class="pt-20">
+  {{/* ============ HERO ============ */}}
+  <header class="relative overflow-hidden border-b border-accent/10" style="background:linear-gradient(to bottom right,#0f0f1a,#131325,#0f0f1a)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10">
+      {{ with .Params.tags }}
+      <div class="flex flex-wrap gap-2 mb-5">
+        {{ range . }}
+        <span class="bg-accent/15 text-accent px-3 py-1 rounded-full text-xs font-medium tracking-wide">{{ . }}</span>
         {{ end }}
-        
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{{ .Title }}</h1>
-        {{ if .Description }}
-        <p class="text-xl text-text-muted mb-6">{{ .Description }}</p>
-        {{ end }}
-        
-        <div class="flex justify-center items-center text-sm text-text-muted space-x-4 mb-6">
-          <time datetime="{{ .Date.Format "2006-01-02" }}">
-            {{ .Date.Format "January 2, 2006" }}
-          </time>
-          {{ if .ReadingTime }}
-          <span>•</span>
-          <span>{{ .ReadingTime }} min read</span>
-          {{ end }}
-          {{ if .Params.author }}
-          <span>•</span>
-          <span>{{ .Params.author }}</span>
-          {{ end }}
-        </div>
-        
-        {{ if .Params.tags }}
-        <div class="flex justify-center flex-wrap gap-2">
-          {{ range .Params.tags }}
-          <span class="bg-accent/20 text-accent px-3 py-1 rounded-full text-sm">{{ . }}</span>
-          {{ end }}
-        </div>
-        {{ end }}
-      </header>
-
-      <div class="prose prose-lg prose-invert max-w-none">
-        {{ .Content }}
       </div>
+      {{ end }}
 
-      <footer class="mt-16 pt-8 border-t border-accent/10">
-        <div class="text-center">
-          <p class="text-text-muted mb-4">
-            Found this post helpful? Share it with your team!
-          </p>
-          <div class="flex justify-center space-x-4">
-            <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" class="btn-outline" target="_blank" rel="noopener noreferrer">
-              Share on Twitter
-            </a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" class="btn-outline" target="_blank" rel="noopener noreferrer">
-              Share on LinkedIn
-            </a>
-          </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] max-w-4xl mb-5">{{ .Title }}</h1>
+
+      {{ with .Description }}
+      <p class="text-lg sm:text-xl text-text-muted leading-relaxed max-w-3xl mb-7">{{ . }}</p>
+      {{ end }}
+
+      {{ partial "byline.html" . }}
+
+      {{ with .Params.featured_image }}
+      <div class="mt-9 rounded-2xl overflow-hidden border border-accent/20 aspect-[21/9]">
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full h-full object-cover">
+      </div>
+      {{ end }}
+    </div>
+  </header>
+
+  {{/* ============ BODY + STICKY TOC ============ */}}
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-12">
+    {{/* --- Sticky TOC --- */}}
+    <aside class="hidden lg:block">
+      <nav class="sticky top-24 text-[13px] leading-[1.7] text-text-muted">
+        <div class="font-mono text-[10.5px] uppercase tracking-wider text-text-muted/70 mb-3 font-semibold">On this page</div>
+        <ol id="blog-toc" class="space-y-0 list-none p-0 m-0">
+          {{/* Populated client-side from article h2/h3 — see script below */}}
+        </ol>
+      </nav>
+    </aside>
+
+    {{/* --- Article --- */}}
+    <article class="prose prose-invert prose-lg max-w-[720px]
+                    prose-headings:font-semibold prose-headings:tracking-tight
+                    prose-h2:text-[28px] prose-h2:mt-12 prose-h2:mb-4
+                    prose-h3:text-[20px] prose-h3:mt-8 prose-h3:mb-3
+                    prose-p:text-text-muted prose-p:leading-[1.75]
+                    prose-strong:text-text
+                    prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                    prose-code:text-accent prose-code:bg-secondary-bg prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:bg-secondary-bg prose-pre:border prose-pre:border-accent/10 prose-pre:rounded-lg
+                    prose-blockquote:border-l-accent prose-blockquote:text-text prose-blockquote:not-italic
+                    prose-ul:text-text-muted prose-li:my-1
+                    prose-hr:border-accent/10">
+      {{ .Content }}
+
+      {{/* Share / footer */}}
+      <footer class="mt-16 pt-8 border-t border-accent/10 not-prose">
+        <div class="text-text-muted text-sm mb-4">Share</div>
+        <div class="flex gap-3">
+          <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" class="btn-outline text-sm" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" class="btn-outline text-sm" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <button onclick="navigator.clipboard.writeText('{{ .Permalink }}')" class="btn-outline text-sm">Copy link</button>
         </div>
       </footer>
     </article>
-    
-    <!-- Related Posts -->
-    {{ $related := .Site.RegularPages.Related . | first 3 }}
-    {{ if $related }}
-    <section class="mt-16">
-      <h2 class="text-2xl font-bold text-center mb-8">Related Posts</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        {{ range $related }}
-        <article class="card">
-          <h3 class="text-lg font-semibold mb-2">
-            <a href="{{ .Permalink }}" class="hover:text-accent transition-colors">
-              {{ .Title }}
-            </a>
-          </h3>
-          <p class="text-text-muted text-sm mb-3">{{ .Summary | truncate 100 }}</p>
-          <div class="text-xs text-text-muted">
-            <time datetime="{{ .Date.Format "2006-01-02" }}">
-              {{ .Date.Format "Jan 2, 2006" }}
-            </time>
-          </div>
-        </article>
-        {{ end }}
-      </div>
-    </section>
-    {{ end }}
   </div>
+
+  {{/* ============ RELATED ============ */}}
+  {{ $related := .Site.RegularPages.Related . | first 3 }}
+  {{ if $related }}
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+    <div class="section-divider mb-10"></div>
+    <h2 class="text-2xl font-bold mb-6 tracking-tight">Keep reading</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {{ range $related }}
+      <a href="{{ .Permalink }}" class="card group block hover:border-accent/30">
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          {{ range first 2 .Params.tags }}
+          <span class="bg-accent/10 text-accent px-2 py-0.5 rounded text-[11px] font-medium">{{ . }}</span>
+          {{ end }}
+        </div>
+        <h3 class="text-lg font-semibold mb-2 tracking-tight group-hover:text-accent transition-colors">{{ .Title }}</h3>
+        <p class="text-text-muted text-sm mb-3 leading-relaxed">{{ .Summary | truncate 110 }}</p>
+        <div class="text-xs text-text-muted/70 font-mono">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+          {{ if .ReadingTime }} · {{ .ReadingTime }} min{{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
 </div>
+
+{{/* ============ TOC GENERATION + ACTIVE TRACKING ============ */}}
+<script>
+(function(){
+  const toc = document.getElementById('blog-toc');
+  if (!toc) return;
+  const article = document.querySelector('article.prose');
+  if (!article) return;
+  const headings = article.querySelectorAll('h2, h3');
+  if (!headings.length) { toc.parentElement.style.display = 'none'; return; }
+
+  headings.forEach((h, i) => {
+    if (!h.id) h.id = 'sec-' + i + '-' + (h.textContent || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40);
+    const li = document.createElement('li');
+    li.className = 'py-1 pl-3.5 border-l-2 border-accent/10 transition-colors ' + (h.tagName === 'H3' ? 'pl-6 text-[12.5px]' : '');
+    li.dataset.target = h.id;
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.className = 'text-inherit no-underline hover:text-accent block break-words';
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+
+  // Scroll-spy
+  const items = toc.querySelectorAll('li');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        items.forEach(li => {
+          const match = li.dataset.target === id;
+          li.classList.toggle('border-accent', match);
+          li.classList.toggle('text-text', match);
+          li.classList.toggle('border-accent/10', !match);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  headings.forEach(h => obs.observe(h));
+})();
+</script>
 {{ end }}

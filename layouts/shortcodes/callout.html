@@ -1,0 +1,11 @@
+{{/* Callout — {{< callout type="note" title="Note" >}}body markdown{{< /callout >}}
+     Types: note | warn | tip | info */}}
+{{ $type := .Get "type" | default "note" }}
+{{ $title := .Get "title" | default (title $type) }}
+{{ $border := "border-accent/40" }}
+{{ if eq $type "warn" }}{{ $border = "border-[#ffb74d]/60" }}{{ end }}
+{{ if eq $type "tip" }}{{ $border = "border-[#81c784]/60" }}{{ end }}
+<aside class="not-prose my-8 rounded-lg border-l-4 {{ $border }} bg-secondary-bg/60 px-5 py-4">
+  <div class="font-mono text-[11px] uppercase tracking-wider text-accent mb-1.5 font-semibold">{{ $title }}</div>
+  <div class="text-text-muted leading-relaxed text-[15px]">{{ .Inner | markdownify }}</div>
+</aside>
